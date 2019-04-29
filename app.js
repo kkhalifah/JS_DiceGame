@@ -52,10 +52,17 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
         
         //check if player won game
-        
-        
-         //next player
+        //if active player = 100 end game
+        if(scores[activePlayer] >= 20) {
+            document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+            document.querySelector('.dice').display = 'none';
+            document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+            document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        } else {
+             //next player
         nextPlayer();
+        }
+        
     });
 
 
