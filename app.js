@@ -8,13 +8,13 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 //line 87, initialize
 init();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
-    
-    // 1. random number
+    if (gamePlaying){
+         // 1. random number
     var dice = Math.floor(Math.random() *6 ) +1;
     
     //2. display result
@@ -32,11 +32,14 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         nextPlayer();
         
     }
+    }
+   
 });
 
     
     document.querySelector('.btn-hold').addEventListener('click', function() {
-        //add current score to global score
+        if (gamePlaying) {
+             //add current score to global score
         scores[activePlayer] += roundScore;
         
         //update UI 
@@ -49,15 +52,18 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             document.querySelector('.dice').display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+            gamePlaying = false;
         } else {
              //next player
         nextPlayer();
         }
-        
+        }
+ 
     });
 
 
     function nextPlayer() {
+        //next player
         activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
         roundScore = 0;
         
@@ -79,7 +85,10 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         scores = [0,0];
         roundScore = 0;
         activePlayer= 0;
+        gamePlaying = true;
+        
         document.querySelector('.dice').style.display = 'none';
+        
         document.getElementById('score-0').textContent = '0';
         document.getElementById('score-1').textContent = '0';
         document.getElementById('current-0').textContent = '0';
